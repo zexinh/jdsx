@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/> 
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <title>Document</title>
+    <style>
+       .dis_goods{
+           margin:auto;
+       }
+       .dis_inc{
+           margin:auto;
+           width:100px;
+           height:50px;
+           color:#fff;
+           background-color:cornflowerblue;
+           text-align: center;
+           line-height: 50px;
+           border-radius: 5px;
+           cursor: pointer;
+       }
+       .dis_inc a{
+        color:#fff;
+         text-decoration: none;
+       }
+    </style>
+</head>
+<body>
+     <div>ManageGoods.index</div>
+     <div class="DA">
+     <!-- <template>
+        <b-table :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" hover :items="goods_data" :fields="table_key">
+
+            <template slot="op" slot-scope="data">
+                  <b-button size="sm" href="http://localhost/test/180731/index.php?">编辑</b-button>
+            </template>
+        </b-table>
+    </template>  -->
+    <div class="dis_inc"><a href="http://localhost/test/180731/index.php?control=Goods&action=add">添加商品</a></div>
+       <table class="dis_goods" width=1000px cellspacing=50px cellpadding=10px border="1px solid #222" style="text-align: center">
+     
+           <tr>
+               <th>商品ID</th>
+               <th>商品名称</th>
+               <th>商品价格</th>
+               <th>商品存放路径</th>
+               <th colspan="2">操作</th>
+           </tr>
+           <tr v-for="n in goods_data">
+               <td>{{n.id}}</td>
+               <td>{{n.g_name}}</td>
+               <td>{{n.g_price}}</td>
+               <td>{{n.g_thumb}}</td>
+               <td><a :href="'http://localhost/test/180731/index.php?control=Goods&action=dele&id='+n.id">删除</a></td>
+               <td><a :href="'http://localhost/test/180731/index.php?control=Goods&action=update&id='+n.id">编辑</a></td>
+           </tr>
+       </table>
+    </div>
+     <script>
+        new Vue({
+            el:'.DA',
+            data:{
+                sortBy: 'age',
+     	 		sortDesc: false,
+               goods_data:[],
+               table_key:[
+                   {
+                       key:'id',
+                       label:'商品ID',
+					   sortable:true,
+                    },
+                  {    
+                      key:'g_name',
+                      label:'商品名称',
+                  },
+                  {
+                        key:'g_price',
+                        label:'商品价格',
+                        sortable:true,
+                  },
+                  {
+                      key:'g_thumb',
+                      label:'图片',
+                  },
+                  {
+                      key:'op',
+                      label:'操作',
+                  }
+               ],
+            },
+            mounted(){
+                this.$http.get('http://localhost/test/180731/index.php?control=Goods&action=getGoodsList')
+                .then((rtnD)=>{
+                     this.goods_data=rtnD.data;
+                     console.log(this.goods_data);
+                })
+            },
+        })
+     </script>
+</body>
+</html>
