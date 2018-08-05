@@ -49,10 +49,16 @@
                     echo '修改语句出错';
                }
      }
-     public function select(){
+     public function select($search=""){
+          if(empty($search)){
           $Statement=$this->pdo->prepare("select * from ".$this->table_name." order by id DESC");//Statement结果集
           $Statement->execute();
           return $Statement->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            $Statement=$this->pdo->prepare("select * from ".$this->table_name." where g_cate='".$search."' order by id DESC");//Statement结果集
+            $Statement->execute();
+            return $Statement->fetchAll(PDO::FETCH_ASSOC);
+        }
      }
      public function find($where_str){
         $Statement = $this->pdo->prepare("select * from ".$this->table_name." where ".$where_str);
